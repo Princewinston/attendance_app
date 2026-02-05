@@ -153,81 +153,81 @@ class _ImportAttendanceScreenState extends State<ImportAttendanceScreen> {
         title: const Text('Import Attendance'),
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Paste Attendance Text',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Paste the attendance list you received from another CR',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey.shade600,
-              ),
-            ),
-            const SizedBox(height: 16),
-            
-            // Example format
-            Card(
-              color: Theme.of(context).brightness == Brightness.dark 
-                  ? const Color(0xFF424242) 
-                  : Colors.blue.shade50,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.info, 
-                          size: 18, 
-                          color: Theme.of(context).brightness == Brightness.dark 
-                              ? Colors.lightBlueAccent 
-                              : Colors.blue.shade700
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Example Format:',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).brightness == Brightness.dark 
-                                ? Colors.white 
-                                : Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      'Mode A (Numbers):\n05.02.2025    FN\nAbsentees:\n1, 2, 5, 6, 12, 35\n\nMode B (List):\n05.02.2025    FN\nAbsentees:\n1. Aadithya\n2. Anuchand',
-                      style: TextStyle(
-                        fontFamily: 'monospace',
-                        color: Theme.of(context).brightness == Brightness.dark 
-                            ? Colors.grey.shade300 
-                            : Colors.black87,
-                      ),
-                    ),
-                  ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Paste Attendance Text',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
-            
-            // Text input
-            Expanded(
-              child: TextField(
+              const SizedBox(height: 8),
+              Text(
+                'Paste the attendance list you received from another CR',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              const SizedBox(height: 16),
+              
+              // Example format
+              Card(
+                color: Theme.of(context).brightness == Brightness.dark 
+                    ? const Color(0xFF424242) 
+                    : Colors.blue.shade50,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.info, 
+                            size: 18, 
+                            color: Theme.of(context).brightness == Brightness.dark 
+                                ? Colors.lightBlueAccent 
+                                : Colors.blue.shade700
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Example Format:',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).brightness == Brightness.dark 
+                                  ? Colors.white 
+                                  : Colors.black87,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Mode A (Numbers):\n05.02.2025    FN\nAbsentees:\n1, 2, 5, 6, 12, 35\n\nMode B (List):\n05.02.2025    FN\nAbsentees:\n1. Aadithya\n2. Anuchand',
+                        style: TextStyle(
+                          fontFamily: 'monospace',
+                          color: Theme.of(context).brightness == Brightness.dark 
+                              ? Colors.grey.shade300 
+                              : Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              
+              // Text input
+              TextField(
                 controller: _textController,
                 maxLines: null,
-                expands: true,
+                minLines: 15, // Make it tall effectively like Expanded but scrollable
                 decoration: InputDecoration(
                   hintText: 'Paste attendance text here...',
                   hintStyle: TextStyle(
@@ -249,28 +249,31 @@ class _ImportAttendanceScreenState extends State<ImportAttendanceScreen> {
                       ? Colors.white 
                       : Colors.black,
                 ),
+                scrollPadding: const EdgeInsets.only(bottom: 100), // Helps with keyboard visibility
               ),
-            ),
-            const SizedBox(height: 16),
-            
-            // Import button
-            SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton.icon(
-                onPressed: _processImport,
-                icon: const Icon(Icons.check_circle),
-                label: const Text(
-                  'Import & Continue Editing',
-                  style: TextStyle(fontSize: 18),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
+              const SizedBox(height: 16),
+              
+              // Import button
+              SizedBox(
+                width: double.infinity,
+                height: 50,
+                child: ElevatedButton.icon(
+                  onPressed: _processImport,
+                  icon: const Icon(Icons.check_circle),
+                  label: const Text(
+                    'Import & Continue Editing',
+                    style: TextStyle(fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                  ),
                 ),
               ),
-            ),
-          ],
+              // Add extra space at bottom for scrolling
+              const SizedBox(height: 300), 
+            ],
+          ),
         ),
       ),
     );
